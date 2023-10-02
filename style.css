@@ -1,3 +1,11 @@
 .sub-board.active {
-    border: 3px solid #f00; /* this will highlight the active board with a red border */
+    border: 10px solid yellow; /* this will highlight the active board with a red border */
+}
+
+.sub-board.win-x, .cell.won.win-x {
+    background-color: red;
+}
+
+.sub-board.win-o, .cell.won.win-o {
+    background-color: blue;
 }
