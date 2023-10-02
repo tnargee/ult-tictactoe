@@ -9,3 +9,7 @@
 .sub-board.win-o, .cell.won.win-o {
     background-color: blue;
 }
+
+.won {
+    pointer-events: none;
+}

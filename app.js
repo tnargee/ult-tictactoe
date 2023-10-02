@@ -34,16 +34,15 @@ function handleCellClick(event) {
     cell.textContent = currentPlayer;
 
     // Check for a win in the sub-board
-    if (checkWin(subBoard, currentPlayer, '.cell')) {
-        subBoard.classList.add(currentPlayer === 'X' ? 'win-x' : 'win-o');
+    if (checkWin(subBoard, '.cell')) {
+        subBoard.classList.add(`win-${currentPlayer.toLowerCase()}`);
         subBoard.querySelectorAll('.cell').forEach(cell => cell.classList.add('won'));
+    }
 
-        // Check for a win in the overall board
-        if (checkWin(document, currentPlayer, '.sub-board.win-x, .sub-board.win-o')) {
-            gameMessage.textContent = `Player ${currentPlayer} Wins!`;
-            lockAllBoards();
-            return;
-        }
+    // Check for a win in the overall board
+    if (checkWin(document, '.sub-board.win-x, .sub-board.win-o')) {
+        gameMessage.textContent = `Player ${currentPlayer} Wins!`;
+        return;
     }
 
     // Set the next active board based on the cell's position in its sub-board.
@@ -83,7 +82,8 @@ function isBoardFull(board) {
 }
 
 // Function to check for a win in a board
-function checkWin(parent, player, selector) {
+// Function to check for a win in a board
+function checkWin(parent, selector) {
     const elements = Array.from(parent.querySelectorAll(selector));
     const winningCombos = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  // rows
@@ -91,5 +91,5 @@ function checkWin(parent, player, selector) {
         [0, 4, 8], [2, 4, 6]              // diagonals
     ];
 
-    return winningCombos.some(combo => combo.every(index => elements[index] && elements[index].classList.contains(player === 'X' ? 'win-x' : 'win-o')));
+    return winningCombos.some(combo => combo.every(index => elements[index] && elements[index].textContent === currentPlayer));
 }
