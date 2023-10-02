@@ -1,5 +1,5 @@
 .sub-board.active {
-    border: 10px solid yellow; /* this will highlight the active board with a red border */
+    border: 5px solid yellow; /* this will highlight the active board with a red border */
 }
 
 .sub-board.win-x, .cell.won.win-x {
@@ -10,6 +10,6 @@
     background-color: blue;
 }
 
-.won {
+.locked {
     pointer-events: none;
 }

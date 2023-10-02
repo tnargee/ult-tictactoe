@@ -1,6 +1,7 @@
 // Initialize a variable to keep track of the current player
 let currentPlayer = 'X';
 let activeBoard = null;
+let overallBoard = Array(9).fill(null); // this array will keep track of who won each sub-board
 
 // Add a click event listener to each cell
 document.querySelectorAll('.cell').forEach(cell => {
@@ -14,6 +15,7 @@ const gameMessage = document.getElementById('game-message');
 function handleCellClick(event) {
     const cell = event.target;
     const subBoard = cell.closest('.sub-board');
+    const subBoardIndex = Array.from(document.querySelectorAll('.sub-board')).indexOf(subBoard);
 
     // Check if the sub-board or cell is already won
     if (subBoard.classList.contains('win-x') || subBoard.classList.contains('win-o') || cell.classList.contains('won')) {
@@ -37,10 +39,12 @@ function handleCellClick(event) {
     if (checkWin(subBoard, '.cell')) {
         subBoard.classList.add(`win-${currentPlayer.toLowerCase()}`);
         subBoard.querySelectorAll('.cell').forEach(cell => cell.classList.add('won'));
+        overallBoard[subBoardIndex] = currentPlayer;
     }
 
     // Check for a win in the overall board
-    if (checkWin(document, '.sub-board.win-x, .sub-board.win-o')) {
+    if (checkOverallWin()) {
+        lockAllBoards();
         gameMessage.textContent = `Player ${currentPlayer} Wins!`;
         return;
     }
@@ -53,8 +57,9 @@ function handleCellClick(event) {
 }
 
 function lockAllBoards() {
-    document.querySelectorAll('.sub-board').forEach(board => {
-        board.classList.add('win-x', 'win-o');
+    document.querySelectorAll('.sub-board').forEach(subBoard => {
+        subBoard.classList.add('locked');
+        subBoard.querySelectorAll('.cell').forEach(cell => cell.classList.add('won'));
     });
 }
 
@@ -82,7 +87,6 @@ function isBoardFull(board) {
 }
 
 // Function to check for a win in a board
-// Function to check for a win in a board
 function checkWin(parent, selector) {
     const elements = Array.from(parent.querySelectorAll(selector));
     const winningCombos = [
@@ -92,4 +96,14 @@ function checkWin(parent, selector) {
     ];
 
     return winningCombos.some(combo => combo.every(index => elements[index] && elements[index].textContent === currentPlayer));
+}
+
+// Function to check for win on the overall board
+function checkOverallWin() {
+    const winningCombos = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+        [0, 4, 8], [2, 4, 6]             // diagonals
+    ];
+    return winningCombos.some(combo => combo.every(index => overallBoard[index] === currentPlayer));
 }
