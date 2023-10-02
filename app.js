@@ -7,6 +7,9 @@ document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('click', handleCellClick);
 });
 
+// Get the game message element
+const gameMessage = document.getElementById('game-message');
+
 // Function to handle the cell click event
 function handleCellClick(event) {
     const cell = event.target;
@@ -17,6 +20,7 @@ function handleCellClick(event) {
         return;
     }
 
+    // Check if it is not the active board
     if (activeBoard && subBoard !== activeBoard) {
         return;
     }
@@ -30,9 +34,16 @@ function handleCellClick(event) {
     cell.textContent = currentPlayer;
 
     // Check for a win in the sub-board
-    if (checkWin(subBoard, currentPlayer)) {
+    if (checkWin(subBoard, currentPlayer, '.cell')) {
         subBoard.classList.add(currentPlayer === 'X' ? 'win-x' : 'win-o');
         subBoard.querySelectorAll('.cell').forEach(cell => cell.classList.add('won'));
+
+        // Check for a win in the overall board
+        if (checkWin(document, currentPlayer, '.sub-board.win-x, .sub-board.win-o')) {
+            gameMessage.textContent = `Player ${currentPlayer} Wins!`;
+            lockAllBoards();
+            return;
+        }
     }
 
     // Set the next active board based on the cell's position in its sub-board.
@@ -40,6 +51,12 @@ function handleCellClick(event) {
 
     // Switch to the other player
     currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+}
+
+function lockAllBoards() {
+    document.querySelectorAll('.sub-board').forEach(board => {
+        board.classList.add('win-x', 'win-o');
+    });
 }
 
 function setActiveBoard(index) {
@@ -65,12 +82,14 @@ function isBoardFull(board) {
     return Array.from(board.querySelectorAll('.cell')).every(cell => cell.textContent !== '');
 }
 
-function checkWin(board, player) {
-    const cells = Array.from(board.querySelectorAll('.cell'));
+// Function to check for a win in a board
+function checkWin(parent, player, selector) {
+    const elements = Array.from(parent.querySelectorAll(selector));
     const winningCombos = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],  // rows
         [0, 3, 6], [1, 4, 7], [2, 5, 8],  // columns
         [0, 4, 8], [2, 4, 6]              // diagonals
     ];
-    return winningCombos.some(combo => combo.every(index => cells[index].textContent === player));
+
+    return winningCombos.some(combo => combo.every(index => elements[index] && elements[index].classList.contains(player === 'X' ? 'win-x' : 'win-o')));
 }
