@@ -24,29 +24,27 @@ function handleCellClick(event) {
     // Fill the cell with the current player's symbol
     cell.textContent = currentPlayer;
 
-    setActiveBoard(cell.id);
+    // Set the next active board based on the cell's position in its sub-board.
+    setActiveBoard(Array.from(subBoard.children).indexOf(cell));
 
     // Switch to the other player
     currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
 }
 
-function setActiveBoard(cellId) {
+function setActiveBoard(index) {
     // remove highlights from all sub-boards
     document.querySelectorAll('.sub-board').forEach(board => {
         board.classList.remove('active');
     });
 
-    // Get the last character from the cell id (1-9)
-    const nextBoardNumber = cellId.charAt(cellId.length - 1);
-
     // Find the corresponding sub-board
-    activeBoard = document.querySelector('#board-${nextBoardNumber}');
+    activeBoard = document.querySelectorAll('.sub-board')[index];
 
-    // If the active board is full, allow any unfilled board to be the active board
-    if (isBoardFull(activeBoard)) {
+    // If the active board is full or null, unset activeBoard, allowing a click on any board.
+    if (!activeBoard || isBoardFull(activeBoard)) {
         activeBoard = null;
     } else {
-        // Otherwise, highlight the active board
+        // Otherwise, add the active class to the new active board.
         activeBoard.classList.add('active');
     }
 }
