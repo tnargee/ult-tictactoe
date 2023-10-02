@@ -12,6 +12,11 @@ function handleCellClick(event) {
     const cell = event.target;
     const subBoard = cell.closest('.sub-board');
 
+    // Check if the sub-board or cell is already won
+    if (subBoard.classList.contains('win-x') || subBoard.classList.contains('win-o') || cell.classList.contains('won')) {
+        return;
+    }
+
     if (activeBoard && subBoard !== activeBoard) {
         return;
     }
@@ -47,7 +52,7 @@ function setActiveBoard(index) {
     activeBoard = document.querySelectorAll('.sub-board')[index];
 
     // If the active board is full or null, unset activeBoard, allowing a click on any board.
-    if (!activeBoard || isBoardFull(activeBoard)) {
+    if (!activeBoard || isBoardFull(activeBoard) || activeBoard.classList.contains('win-x') || activeBoard.classList.contains('win-o')) {
         activeBoard = null;
     } else {
         // Otherwise, add the active class to the new active board.
