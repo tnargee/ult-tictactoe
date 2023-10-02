@@ -1,0 +1,3 @@
+.active {
+    border: 3px solid #f00; /* this will highlight the active board with a red border */
+}
