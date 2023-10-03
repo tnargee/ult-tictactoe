@@ -46,6 +46,7 @@ function handleCellClick(event) {
     if (checkOverallWin()) {
         lockAllBoards();
         gameMessage.textContent = `Player ${currentPlayer} Wins!`;
+        gameMessage.style.color = currentPlayer === 'X' ? 'red' : 'blue';
         return;
     }
 
