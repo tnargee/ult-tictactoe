@@ -43,14 +43,23 @@ function handleCellClick(event) {
         subBoard.querySelectorAll('.cell').forEach(cell => cell.classList.add('won'));
         subBoard.classList.add('won');
         overallBoard[subBoardIndex] = currentPlayer;
+        subBoard.classList.add('animate__animated', 'animate__pulse');
     }
 
     // Check for a win in the overall board
-    if (checkOverallWin()) {
+    let winningCombo = checkOverallWin();
+    if (winningCombo) {
         lockAllBoards();
         gameMessage.textContent = `Player ${currentPlayer} Wins!`;
         gameMessage.style.color = currentPlayer === 'X' ? 'red' : 'blue';
-        return;
+
+        // Apply the pulse effect to the winning sub-boards
+        winningCombo.forEach(index => {
+            let winningSubBoard = document.querySelectorAll('.sub-board')[index];
+            winningSubBoard.classList.add('animate__animated', 'animate__pulse');
+        });
+
+        return; // to exit the function
     }
 
     // Set the next active board based on the cell's position in its sub-board.
@@ -58,6 +67,25 @@ function handleCellClick(event) {
 
     // Switch to the other player
     currentPlayer = (currentPlayer === 'X') ? 'O' : 'X';
+}
+
+document.getElementById('reset-button').addEventListener('click', resetGame);
+
+function resetGame() {
+    currentPlayer = 'X';
+    activeBoard = null;
+    overallBoard.fill(null);
+
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('X', 'O', 'won');
+    });
+
+    document.querySelectorAll('.sub-board').forEach(subBoard => {
+        subBoard.classList.remove('win-x', 'win-o', 'won', 'locked', 'active', 'animate__animated', 'animate__pulse');
+    });
+
+    gameMessage.textContent = '';
 }
 
 function lockAllBoards() {
@@ -109,5 +137,10 @@ function checkOverallWin() {
         [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
         [0, 4, 8], [2, 4, 6]             // diagonals
     ];
-    return winningCombos.some(combo => combo.every(index => overallBoard[index] === currentPlayer));
+    for (let combo of winningCombos) {
+        if (combo.every(index => overallBoard[index] === currentPlayer)) {
+            return combo;  // return the winning combination
+        }
+    }
+    return null;
 }

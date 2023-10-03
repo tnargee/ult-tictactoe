@@ -6,25 +6,27 @@
     <title>Ultimate Tic Tac Toe</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
 
     <style>
         .board {
             display: grid;
             grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-            gap: 5px;
+            gap: 25px;
         }
         .sub-board {
             display: grid;
             grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-            gap: 2px;
+            gap: 1px;
             border: 1px solid #000;
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
         }
         .cell {
             border: 1px solid #ccc;
-            width: 30px;
-            height: 30px;
+            width: 37px;
+            height: 37px;
         }
     </style>
 </head>
@@ -137,6 +139,9 @@
     </div>
 
     <div id="game-message"></div>
+
+    <button id="reset-button">Reset</button>
+
     <script src="app.js"></script>
 </body>
 </html>

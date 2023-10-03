@@ -1,5 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* This ensures consistent sizing */
+}
+
 .sub-board.active {
-    border: 5px solid yellow; /* this will highlight the active board with a red border */
+    box-shadow: inset 0 0 0 5px yellow;
 }
 
 .sub-board.win-x, .cell.won.win-x {
@@ -23,24 +29,25 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 #logo-container {
     width: 100%;
     text-align: center;
-    padding: 5px 0;
+    padding: 1px 0;
+    margin: 0;
 }
 
 #logo {
-    max-width: 500px;  /* Adjust based on your logo size */
+    max-width: 500px;
+    margin: 0;
 }
 
 .board {
     display: grid;
-    margin-top: 40px;
+    margin-top: 10px;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    gap: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* This is a more modern font */
 }
 
@@ -53,12 +60,12 @@ body {
     border-radius: 5px;
     width: 150px;
     height: 150px;
-    font-size: 36px;
+    font-size: 25px;
 }
 .sub-board {
     border-radius: 10px;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
 }
 
@@ -81,32 +88,58 @@ body {
     font-family: 'Bebas Neue', sans-serif;
 }
 
+#reset-button {
+    display: block;
+    margin: 20px auto; /* centers the button and gives it some space */
+    padding: 10px 20px;
+    font-family: 'Bebas Neue', sans-serif; /* set the font to Bebas Neue */
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#reset-button:hover {
+    background-color: #555;
+}
+
+#game-message {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 24px;
+}
+
 .cell:hover {
     background: rgba(255, 255, 255, 0.1);
     cursor: pointer;
 }
 
 .cell:not(.won):hover {
-    transform: scale(1.05);
     transition: transform 0.3s ease;
 }
 
-@keyframes burning {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(255, 100, 100, 0.9); }
-    100% { background-color: transparent; }
-}
-
-@keyframes burning-blue {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(100, 100, 255, 0.9); }
-    100% { background-color: transparent; }
+@keyframes flameEffect {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
 }
 
 .sub-board.won.x {
-    animation: burning 1.5s infinite;
+    animation-iteration-count: infinite;
 }
 
 .sub-board.won.o {
-    animation: burning-blue 1.5s infinite;
+    animation-iteration-count: infinite;
 }
