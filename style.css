@@ -29,11 +29,11 @@ body {
 #logo-container {
     width: 100%;
     text-align: center;
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 #logo {
-    max-width: 750px;  /* Adjust based on your logo size */
+    max-width: 500px;  /* Adjust based on your logo size */
 }
 
 .board {
