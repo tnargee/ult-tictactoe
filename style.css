@@ -34,7 +34,7 @@ body {
 }
 
 #logo {
-    max-width: 200px;  /* Adjust based on your logo size */
+    max-width: 1000px;  /* Adjust based on your logo size */
 }
 
 .board {
@@ -45,6 +45,7 @@ body {
 }
 
 .cell {
+    font-family: 'Bebas Neue', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,18 +54,35 @@ body {
 }
 .sub-board {
     border-radius: 10px;
+    width: 150px;
+    height: 150px;
     overflow: hidden;
 }
 
 .cell {
     border-radius: 5px;
+    width: 150px;
+    height: 150px;
+    font-size: 36px;
+}
+
+.cell.x {
+    color: darkred;
+}
+
+.cell.o {
+    color: darkblue;
+}
+
+.sub-board.won .cell {
+    color: black;
 }
 
 #game-message {
     margin-top: 20px;
     font-size: 32px;
     font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 .cell:hover {
@@ -75,4 +93,24 @@ body {
 .cell:not(.won):hover {
     transform: scale(1.05);
     transition: transform 0.3s ease;
+}
+
+@keyframes burning {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(255, 100, 100, 0.4); }
+    100% { background-color: transparent; }
+}
+
+@keyframes burning-blue {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(100, 100, 255, 0.4); }
+    100% { background-color: transparent; }
+}
+
+.sub-board.won.x {
+    animation: burning 1.5s infinite;
+}
+
+.sub-board.won.o {
+    animation: burning-blue 1.5s infinite;
 }

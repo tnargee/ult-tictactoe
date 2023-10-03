@@ -35,10 +35,13 @@ function handleCellClick(event) {
     // Fill the cell with the current player's symbol
     cell.textContent = currentPlayer;
 
+    cell.classList.add(currentPlayer.toLowerCase());
+
     // Check for a win in the sub-board
     if (checkWin(subBoard, '.cell')) {
         subBoard.classList.add(`win-${currentPlayer.toLowerCase()}`);
         subBoard.querySelectorAll('.cell').forEach(cell => cell.classList.add('won'));
+        subBoard.classList.add('won');
         overallBoard[subBoardIndex] = currentPlayer;
     }
 
