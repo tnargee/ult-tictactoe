@@ -29,7 +29,7 @@ body {
 #logo-container {
     width: 100%;
     text-align: center;
-    padding: 20px 0;
+    padding: 5px 0;
 }
 
 #logo {
@@ -93,13 +93,13 @@ body {
 
 @keyframes burning {
     0% { background-color: transparent; }
-    50% { background-color: rgba(255, 100, 100, 0.4); }
+    50% { background-color: rgba(255, 100, 100, 0.9); }
     100% { background-color: transparent; }
 }
 
 @keyframes burning-blue {
     0% { background-color: transparent; }
-    50% { background-color: rgba(100, 100, 255, 0.4); }
+    50% { background-color: rgba(100, 100, 255, 0.9); }
     100% { background-color: transparent; }
 }
 
